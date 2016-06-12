@@ -21,22 +21,36 @@ angular.module('ng-field-edit', [])
       }
     };
   })
+  .directive('ngFormFieldEdit', function(){
+    return {
+      restrict: 'A',
+      replace: true,
+      template: '',
+      scope: {
+        form: '=feForm'
+      },
+      link: function(scope, element, attrs){
+
+      }
+    }
+  })
   .directive('ngFieldEdit', ['$compile', '$templateCache', function($compile, $templateCache){
     return {
       restrict: 'A', 
       replace: true, 
       scope: {
-        data:     '=feData', 
         form:     '=feForm', 
-        save:     '=feSave', 
-        edit:     '=feEdit', 
-        cancel:   '=feCancel', 
-        visible:  '=feVisible', 
-        editable: '=feEditable', 
-        editing:  '=feEditing', 
-        enable:   '=feEnable', 
-        waiting:  '=feWaiting', 
-        extra:    '=feExtra'
+        field:    '=feField',
+        data:     '=?feData', 
+        save:     '=?feSave', 
+        edit:     '=?feEdit', 
+        cancel:   '=?feCancel', 
+        visible:  '=?feVisible', 
+        editable: '=?feEditable', 
+        editing:  '=?feEditing', 
+        enable:   '=?feEnable', 
+        waiting:  '=?feWaiting', 
+        extra:    '=?feExtra'
       },
       link: function(scope, element, attrs){
 

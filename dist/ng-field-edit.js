@@ -1,20 +1,22 @@
 angular.module('ng-field-edit', [])
   .run(['$templateCache', function($templateCache){
-    // template to text [input]
-    $templateCache.put('template/ng-field-edit_field_text.html', '<input type="text" ng-model="form.data[field]">');
-    $templateCache.put('template/ng-field-edit_data_text.html', '{{ form.data[field] }}');
+    // showing text
+    $templateCache.put('template/ng-field-edit_data[text].html', '<span ng-show="visible">{{ form.data[field] || contentEmpty }}</span>');
+    // showing link
+    $templateCache.put('template/ng-field-edit_data[link].html', '<a href="" ng-click="form.edit()" ng-show="visible">{{ form.data[field] ? form.data[field] : contentEmpty }}</a>');
+    // showing check
+    $templateCache.put('template/ng-field-edit_data[check].html', '<span ng-show="visible">{{ form.data[field] ? contentTrue : contentFalse }}</span>');
+    // showing check-link
+    $templateCache.put('template/ng-field-edit_data[check-link].html', '<a href="" ng-click="form.edit()" ng-show="visible">{{ form.data[field] ? contentTrue : contentFalse }}</a>');
+    // editing text
+    $templateCache.put('template/ng-field-edit_field[text].html', '<input type="text" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible">');
+    // editing text-save
+    $templateCache.put('template/ng-field-edit_field[text-save].html', '<input type="text" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible"><button ng-click="form.save()">save</button><button ng-click="form.cancel()">cancel</button>');
+    // editing check
+    $templateCache.put('template/ng-field-edit_field[check].html', '<input type="checkbox" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible"> {{ contentDescription }}');
+    // editing check-save
+    $templateCache.put('template/ng-field-edit_field[check-save].html', '<input type="checkbox" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible"> {{ contentDescription }}<button ng-click="form.save()">save</button><button ng-click="form.cancel()">cancel</button>');
 
-    // template to link [input]
-    $templateCache.put('template/ng-field-edit_field_link.html', '<input type="text" ng-model="form.data[field]">');
-    $templateCache.put('template/ng-field-edit_data_link.html', '<a href="#" ng-click="form.edit()">{{ form.data[field] }}</a>');
-
-    // template to text-save [input-save-cancel]
-    $templateCache.put('template/ng-field-edit_field_text-save.html', '<input type="text" ng-model="form.data[field]"><button ng-click="form.save()">save</button><button ng-click="form.cancel()">cancel</button>');
-    $templateCache.put('template/ng-field-edit_data_text-save.html', '{{ form.data[field] }}');
-
-    // template to link-save [text_input-btn_save-btn_cancel]
-    $templateCache.put('template/ng-field-edit_field_link-save.html', '<input type="text" ng-model="form.data[field]"><button ng-click="form.save()">save</button><button ng-click="form.cancel()">cancel</button>');
-    $templateCache.put('template/ng-field-edit_data_link-save.html', '<a href="#" ng-click="form.edit()">{{ form.data[field] }}</a>');
   }])
   .factory('feFormData', function(){
     return function(){
@@ -23,26 +25,21 @@ angular.module('ng-field-edit', [])
         _data: undefined, 
         visible: true, 
         editing: false, 
-        enable: true, 
         waiting: false, 
         save: function(){
           angular.merge(this._data, this.data);
           this.data = angular.copy(this._data);
           this.editing = false;
-          console.log('form.save()');
         }, 
         edit: function(){
           this.editing = true;
-          console.log('form.edit()');
         }, 
         cancel: function(){
           this.reset();
           this.editing = false;
-          console.log('form.cancel()');
         }, 
         reset: function(){
           this.data = angular.copy(this._data);
-          console.log('form.reset()');
         }, 
         setData: function(data){
           this._data = (data == undefined ? '' : data);
@@ -57,14 +54,28 @@ angular.module('ng-field-edit', [])
       replace: true,
       template: '',
       scope: {
-        ngFormFieldEdit: '=ngFormFieldEdit',
-        data: '=ffeData'
+        ngFormFieldEdit:'=ngFormFieldEdit', 
+        data:           '=?ffeData'
       },
       link: function(scope, element, attrs){
-        
-        scope.ngFormFieldEdit = (scope.ngFormFieldEdit == undefined ? feFormData() : scope.ngFormFieldEdit);
-        scope.ngFormFieldEdit.setData(scope.data);
 
+        // form back to initial state
+        scope.reset = function(){
+          scope.ngFormFieldEdit = feFormData();
+          scope.update();
+        }
+
+        scope.update = function(){
+          scope.ngFormFieldEdit = (scope.ngFormFieldEdit == undefined ? feFormData() : scope.ngFormFieldEdit);
+          scope.ngFormFieldEdit.setData(scope.data ? scope.data : {});
+        }
+
+        scope.$watch('data', function(){
+          scope.update();
+        }, true);
+
+        // init form
+        scope.reset();
       }
     }
   }])
@@ -73,25 +84,36 @@ angular.module('ng-field-edit', [])
       restrict: 'A', 
       replace: true, 
       scope: {
-        form:     '=?feForm', 
-        field:    '=?feField', 
-        data:     '=?feData', 
-        extra:    '=?feExtra'
+        form:              '=?feForm', 
+        field:             '=?feField', 
+        data:              '=?feData', 
+        editable:          '=?feEditable', 
+        visible:           '=?feVisible', 
+        contentDescription:'=?feContentDescription', 
+        contentTrue:       '=?feContentTrue', 
+        contentFalse:      '=?feContentFalse', 
+        contentEmpty:      '=?feContentEmpty', 
+        extra:             '=?feExtra'
       },
       link: function(scope, element, attrs){
 
         // identify when data own one namespace by not found a field to data
         scope.ns_data = false;
-
-        // when don't exists form, create new
+        scope.editable = (scope.editable == undefined ? true : scope.editable);
+        scope.visible = (scope.visible == undefined ? true : scope.visible);
+        scope.contentDescription = (scope.contentDescription ? scope.contentDescription : '');
+        scope.contentTrue = (scope.contentTrue ? scope.contentTrue : '');
+        scope.contentFalse = (scope.contentFalse ? scope.contentFalse : '');
+        scope.contentEmpty = (scope.contentEmpty ? scope.contentEmpty : 'empty');
+        // when don't exists form, create one
         scope.form = (scope.form == undefined ? feFormData() : scope.form);
-        scope.form.setData(scope.data);
         // when field is not implemented then create base field(data)
         if(scope.field == undefined){
-          scope.form.setData({data: scope.form._data});
-          // scope.form._data = {data: scope.form._data};
+          scope.form.setData({data: scope.data});
           scope.field = 'data';
           scope.ns_data = true;
+        }else if(scope.form._data == undefined){
+          scope.form.setData(scope.data);
         }
 
         /****************
@@ -99,18 +121,31 @@ angular.module('ng-field-edit', [])
          ****************/
         // manage what template use
         scope.getTemplate = function(){
+
           switch(attrs.ngFieldEdit){
-            case 'text':
-              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field_text.html': 'template/ng-field-edit_data_text.html');
+            case 'text-text':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[text].html': 'template/ng-field-edit_data[text].html');
 
-            case 'link':
-              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field_link.html': 'template/ng-field-edit_data_link.html');
+            case 'link-text':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[text].html': 'template/ng-field-edit_data[link].html');
 
-            case 'text-save':
-              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field_text-save.html': 'template/ng-field-edit_data_text-save.html');
+            case 'text-check':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[check].html': 'template/ng-field-edit_data[check].html');
 
-            case 'link-save':
-              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field_link-save.html': 'template/ng-field-edit_data_link-save.html');
+            case 'link-check':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[check].html': 'template/ng-field-edit_data[check-link].html');
+
+            case 'text-text-save':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[text-save].html': 'template/ng-field-edit_data[text].html');
+
+            case 'link-text-save':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[text-save].html': 'template/ng-field-edit_data[link].html');
+
+            case 'text-check-save':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[check-save].html': 'template/ng-field-edit_data[check].html');
+
+            case 'link-check-save':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[check-save].html' : 'template/ng-field-edit_data[check-link].html');
 
           }
         };
@@ -119,9 +154,11 @@ angular.module('ng-field-edit', [])
           element.html(scope.getTemplate());
           $compile(element.contents())(scope);
         };
- 
+
+        /****************
+         * watchs
+         ****************/
         scope.$watch('form.editing', scope.updateTemplate);
-        scope.$watch('form.enable', scope.updateTemplate);
         scope.$watch('form._data', function(){
           // when namespace is used
           if(scope.ns_data){

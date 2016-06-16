@@ -1,3 +1,7 @@
+/*
+ ngFieldEdit v0.0.1
+ (c) 2016 Gildson
+*/
 angular.module('ng-field-edit', [])
   .run(['$templateCache', function($templateCache){
     // showing text
@@ -8,14 +12,22 @@ angular.module('ng-field-edit', [])
     $templateCache.put('template/ng-field-edit_data[check].html', '<span ng-show="visible">{{ form.data[field] ? contentTrue : contentFalse }}</span>');
     // showing check-link
     $templateCache.put('template/ng-field-edit_data[check-link].html', '<a href="" ng-click="form.edit()" ng-show="visible">{{ form.data[field] ? contentTrue : contentFalse }}</a>');
+    // showing combo
+    $templateCache.put('template/ng-field-edit_data[combo].html', '<span ng-show="visible">{{ getOption(form.data[field]).description || contentEmpty }}</span>');
+    // showing combo-link
+    $templateCache.put('template/ng-field-edit_data[combo-link].html', '<a href="" ng-click="form.edit()" ng-show="visible">{{ getOption(form.data[field]).description || contentEmpty }}</a>');
     // editing text
-    $templateCache.put('template/ng-field-edit_field[text].html', '<input type="text" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible">');
+    $templateCache.put('template/ng-field-edit_field[text].html', '<input class="form-control" type="text" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible">');
     // editing text-save
-    $templateCache.put('template/ng-field-edit_field[text-save].html', '<input type="text" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible"><button ng-click="form.save()">save</button><button ng-click="form.cancel()">cancel</button>');
+    $templateCache.put('template/ng-field-edit_field[text-save].html', '<div class="col-sm-6"><input class="form-control" type="text" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible"></div> <button class="btn btn-primary" ng-click="form.save()">save</button> <button class="btn btn-default" ng-click="form.cancel()">cancel</button>');
     // editing check
     $templateCache.put('template/ng-field-edit_field[check].html', '<input type="checkbox" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible"> {{ contentDescription }}');
     // editing check-save
-    $templateCache.put('template/ng-field-edit_field[check-save].html', '<input type="checkbox" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible"> {{ contentDescription }}<button ng-click="form.save()">save</button><button ng-click="form.cancel()">cancel</button>');
+    $templateCache.put('template/ng-field-edit_field[check-save].html', '<input type="checkbox" ng-model="form.data[field]" ng-disabled="!editable" ng-show="visible"> {{ contentDescription }} <button class="btn btn-primary" ng-click="form.save()">save</button> <button class="btn btn-default" ng-click="form.cancel()">cancel</button>');
+    // editing combo
+    $templateCache.put('template/ng-field-edit_field[combo].html', '<select class="form-control" ng-model="form.data[field]" ng-options="op.value as op.description for op in options"></select>');
+    // editing combo-save
+    $templateCache.put('template/ng-field-edit_field[combo-save].html', '<div class="col-sm-6"><select class="form-control" ng-model="form.data[field]" ng-options="op.value as op.description for op in options"></select></div> <button class="btn btn-primary" ng-click="form.save()">save</button> <button class="btn btn-default" ng-click="form.cancel()">cancel</button>');
 
   }])
   .factory('feFormData', function(){
@@ -93,6 +105,7 @@ angular.module('ng-field-edit', [])
         contentTrue:       '=?feContentTrue', 
         contentFalse:      '=?feContentFalse', 
         contentEmpty:      '=?feContentEmpty', 
+        options:           '=?feOptions', 
         extra:             '=?feExtra'
       },
       link: function(scope, element, attrs){
@@ -105,6 +118,7 @@ angular.module('ng-field-edit', [])
         scope.contentTrue = (scope.contentTrue ? scope.contentTrue : '');
         scope.contentFalse = (scope.contentFalse ? scope.contentFalse : '');
         scope.contentEmpty = (scope.contentEmpty ? scope.contentEmpty : 'empty');
+        scope.options = (scope.options ? scope.options : []);
         // when don't exists form, create one
         scope.form = (scope.form == undefined ? feFormData() : scope.form);
         // when field is not implemented then create base field(data)
@@ -147,7 +161,29 @@ angular.module('ng-field-edit', [])
             case 'link-check-save':
               return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[check-save].html' : 'template/ng-field-edit_data[check-link].html');
 
+            case 'text-combo':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[combo].html' : 'template/ng-field-edit_data[combo].html');
+
+            case 'link-combo':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[combo].html' : 'template/ng-field-edit_data[combo-link].html');
+
+            case 'text-combo-save':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[combo-save].html' : 'template/ng-field-edit_data[combo].html');
+
+            case 'link-combo-save':
+              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[combo-save].html' : 'template/ng-field-edit_data[combo-link].html');
+
           }
+        };
+
+        scope.getOption = function(value){
+          // 
+          for(var n = 0; n < scope.options.length; n++){
+            if(scope.options[n].value == value){
+              return scope.options[n];
+            }
+          }
+          return {};
         };
 
         scope.updateTemplate = function(){

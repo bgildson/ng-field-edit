@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ng-field-edit</title>
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap-3.3.6/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/pygments-lovelace.css">
+
+  <style>
+    .panel-footer > .highlight > pre {
+      margin: 0 !important;
+      border: 0 !important;
+    }
+    .navbar-brand {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      text-align: center;
+      margin:0 auto;
+    }
+    .navbar-affix {
+      position: fixed;
+      top: 20px;
+    }
+  </style>
+
+</head>
+<body ng-app="ngFieldEditApp" ng-controller="ngFieldEditCtrl">
+  
+  <div class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <span class="navbar-brand">ng-field-edit</span>
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="container">
+
+    <div class="row">
+      
+      <!-- documentation -->
+      <div class="col-sm-9">
+        
+        <!-- example 01 -->
+        <div class="row">
+          <h2 id="text-text">text-text</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="text-text" fe-form="ex01form" fe-data="ex01data"></div>
+              </div>
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-success" ng-click="ex01form.edit()" ng-disabled="ex01form.editing">edit</button>
+                <button class="btn btn-primary" ng-click="ex01form.save()" ng-disabled="!ex01form.editing">save</button>
+                <button class="btn btn-default" ng-click="ex01form.cancel()" ng-disabled="!ex01form.editing">cancel</button>
+              </div>
+              
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;text-text&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex01form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex01data&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-success&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex01form.edit()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;ex01form.editing&quot;</span><span class="p">&gt;</span>edit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex01form.save()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex01form.editing&quot;</span><span class="p">&gt;</span>save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex01form.cancel()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex01form.editing&quot;</span><span class="p">&gt;</span>cancel<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 02 -->
+        <div class="row">
+          <h2 id="link-text">link-text</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="link-text" fe-form="ex02form" fe-data="ex02data"></div>
+              </div>
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-primary" ng-click="ex02form.save()" ng-disabled="!ex02form.editing">save</button>
+                <button class="btn btn-default" ng-click="ex02form.cancel()" ng-disabled="!ex02form.editing">cancel</button>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;link-text&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex02form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex02data&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex02form.save()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex02form.editing&quot;</span><span class="p">&gt;</span>save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex02form.cancel()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex02form.editing&quot;</span><span class="p">&gt;</span>cancel<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 03 -->
+        <div class="row">
+          <h2 id="text-text-save">text-text-save</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="text-text-save" fe-form="ex03form" fe-data="ex03data"></div>
+              </div>
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-success" ng-click="ex03form.edit()" ng-disabled="ex03form.editing">edit</button>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;text-text-save&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex03form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex03data&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-success&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex03form.edit()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;ex03form.editing&quot;</span><span class="p">&gt;</span>edit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 04 -->
+        <div class="row">
+          <h2 id="link-text-save">link-text-save</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="link-text-save" fe-form="ex04form" fe-data="ex04data"></div>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;link-text-save&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex04form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex04data&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 05 -->
+        <div class="row">
+          <h2 id="text-check">text-check</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="text-check" fe-form="ex05form" fe-data="ex05data" fe-content-description="'I accept'" fe-content-true="'Accept!'" fe-content-false="'Don\'t accept!'"></div>
+              </div>
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-success" ng-click="ex05form.edit()" ng-disabled="ex05form.editing">edit</button>
+                <button class="btn btn-primary" ng-click="ex05form.save()" ng-disabled="!ex05form.editing">save</button>
+                <button class="btn btn-default" ng-click="ex05form.cancel()" ng-disabled="!ex05form.editing">cancel</button>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;text-check&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex05form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex05data&quot;</span> <span class="na">fe-content-description</span><span class="o">=</span><span class="s">&quot;&#39;I accept&#39;&quot;</span> <span class="na">fe-content-true</span><span class="o">=</span><span class="s">&quot;&#39;Accept!&#39;&quot;</span> <span class="na">fe-content-false</span><span class="o">=</span><span class="s">&quot;&#39;Don&#39;t accept!&#39;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-success&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex05form.edit()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;ex05form.editing&quot;</span><span class="p">&gt;</span>edit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex05form.save()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex05form.editing&quot;</span><span class="p">&gt;</span>save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex05form.cancel()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex05form.editing&quot;</span><span class="p">&gt;</span>cancel<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 06 -->
+        <div class="row">
+          <h2 id="link-check">link-check</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="link-check" fe-form="ex06form" fe-data="ex06data" fe-content-description="'I accept'" fe-content-true="'Accept!'" fe-content-false="'Don\'t accept!'"></div>
+              </div>
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-primary" ng-click="ex06form.save()" ng-disabled="!ex06form.editing">save</button>
+                <button class="btn btn-default" ng-click="ex06form.cancel()" ng-disabled="!ex06form.editing">cancel</button>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;link-check&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex06form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex06data&quot;</span> <span class="na">fe-content-description</span><span class="o">=</span><span class="s">&quot;&#39;I accept&#39;&quot;</span> <span class="na">fe-content-true</span><span class="o">=</span><span class="s">&quot;&#39;Accept!&#39;&quot;</span> <span class="na">fe-content-false</span><span class="o">=</span><span class="s">&quot;&#39;Don&#39;t accept!&#39;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex06form.save()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex06form.editing&quot;</span><span class="p">&gt;</span>save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex06form.cancel()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex06form.editing&quot;</span><span class="p">&gt;</span>cancel<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 07 -->
+        <div class="row">
+          <h2 id="text-check-save">text-check-save</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="text-check-save" fe-form="ex07form" fe-data="ex07data" fe-content-description="'I accept'" fe-content-true="'Accept!'" fe-content-false="'Don\'t accept!'"></div>
+              </div>
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-success" ng-click="ex07form.edit()" ng-disabled="ex07form.editing">edit</button>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;text-check-save&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex07form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex07data&quot;</span> <span class="na">fe-content-description</span><span class="o">=</span><span class="s">&quot;&#39;I accept&#39;&quot;</span> <span class="na">fe-content-true</span><span class="o">=</span><span class="s">&quot;&#39;Accept!&#39;&quot;</span> <span class="na">fe-content-false</span><span class="o">=</span><span class="s">&quot;&#39;Don&#39;t accept!&#39;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-success&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex07form.edit()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;ex07form.editing&quot;</span><span class="p">&gt;</span>edit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 08 -->
+        <div class="row">
+          <h2 id="link-check-save">link-check-save</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="link-check-save" fe-form="ex08form" fe-data="ex08data" fe-content-description="'I accept'" fe-content-true="'Accept!'" fe-content-false="'Don\'t accept!'"></div>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;link-check-save&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex08form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex08data&quot;</span> <span class="na">fe-content-description</span><span class="o">=</span><span class="s">&quot;&#39;I accept&#39;&quot;</span> <span class="na">fe-content-true</span><span class="o">=</span><span class="s">&quot;&#39;Accept!&#39;&quot;</span> <span class="na">fe-content-false</span><span class="o">=</span><span class="s">&quot;&#39;Don&#39;t accept!&#39;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 09 -->
+        <div class="row">
+          <h2 id="text-combo">text-combo</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="text-combo" fe-form="ex09form" fe-data="ex09data" fe-options="ex09options"></div>
+              </div>
+
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-success" ng-click="ex09form.edit()" ng-disabled="ex09form.editing">edit</button>
+                <button class="btn btn-primary" ng-click="ex09form.save()" ng-disabled="!ex09form.editing">save</button>
+                <button class="btn btn-default" ng-click="ex09form.cancel()" ng-disabled="!ex09form.editing">cancel</button>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;text-combo&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex09form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex09data&quot;</span> <span class="na">fe-options</span><span class="o">=</span><span class="s">&quot;ex09options&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-success&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex09form.edit()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;ex09form.editing&quot;</span><span class="p">&gt;</span>edit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex09form.save()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex09form.editing&quot;</span><span class="p">&gt;</span>save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex09form.cancel()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex09form.editing&quot;</span><span class="p">&gt;</span>cancel<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 10 -->
+        <div class="row">
+          <h2 id="link-combo">link-combo</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="link-combo" fe-form="ex10form" fe-data="ex10data" fe-options="ex10options"></div>
+              </div>
+
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-primary" ng-click="ex10form.save()" ng-disabled="!ex10form.editing">save</button>
+                <button class="btn btn-default" ng-click="ex10form.cancel()" ng-disabled="!ex10form.editing">cancel</button>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;link-combo&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex10form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex10data&quot;</span> <span class="na">fe-options</span><span class="o">=</span><span class="s">&quot;ex10options&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex10form.save()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex10form.editing&quot;</span><span class="p">&gt;</span>save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex10form.cancel()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;!ex10form.editing&quot;</span><span class="p">&gt;</span>cancel<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 11 -->
+        <div class="row">
+          <h2 id="text-combo-save">text-combo-save</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="text-combo-save" fe-form="ex11form" fe-data="ex11data" fe-options="ex11options"></div>
+              </div>
+
+              <div class="col-sm-12"><hr>
+
+                <!-- actions -->
+                <button class="btn btn-success" ng-click="ex11form.edit()" ng-disabled="ex11form.editing">save</button>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;text-combo-save&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex11form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex11data&quot;</span> <span class="na">fe-options</span><span class="o">=</span><span class="s">&quot;ex11options&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- actions --&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-success&quot;</span> <span class="na">ng-click</span><span class="o">=</span><span class="s">&quot;ex11form.edit()&quot;</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&quot;ex11form.editing&quot;</span><span class="p">&gt;</span>save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+
+        <!-- example 12 -->
+        <div class="row">
+          <h2 id="link-combo-save">link-combo-save</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p><samp>example</samp></p><br />
+
+              <div class="col-sm-12">
+                <!-- implementation -->
+                <div ng-field-edit="link-combo-save" fe-form="ex12form" fe-data="ex12data" fe-options="ex12options"></div>
+              </div>
+
+            </div>
+            <div class="panel-footer">
+              <div class="highlight"><pre><span></span><span class="c">&lt;!-- implementation --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-field-edit</span><span class="o">=</span><span class="s">&quot;link-combo-save&quot;</span> <span class="na">fe-form</span><span class="o">=</span><span class="s">&quot;ex12form&quot;</span> <span class="na">fe-data</span><span class="o">=</span><span class="s">&quot;ex12data&quot;</span> <span class="na">fe-options</span><span class="o">=</span><span class="s">&quot;ex12options&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+                
+            </div>
+          </div>
+        </div>
+        
+
+
+
+
+      </div>
+
+      <!-- nav -->
+      <div class="col-sm-3">
+
+        <nav ng-class="{'navbar-affix': navbar_affix}">
+          <ul class="nav nav-pills nav-stacked">
+            <li class="nav-item">
+              <a href="#text-text" class="nav-link">text-text</a>
+            </li>
+            <li class="nav-item">
+              <a href="#link-text" class="nav-link">link-text</a>
+            </li>
+            <li class="nav-item">
+              <a href="#text-text-save" class="nav-link">text-text-save</a>
+            </li>
+            <li class="nav-item">
+              <a href="#link-text-save" class="nav-link">link-text-save</a>
+            </li>
+            <li class="nav-item">
+              <a href="#text-check" class="nav-link">text-check</a>
+            </li>
+            <li class="nav-item">
+              <a href="#link-check" class="nav-link">link-check</a>
+            </li>
+            <li class="nav-item">
+              <a href="#text-check-save" class="nav-link">text-check-save</a>
+            </li>
+            <li class="nav-item">
+              <a href="#link-check-save" class="nav-link">link-check-save</a>
+            </li>
+            <li class="nav-item">
+              <a href="#text-combo" class="nav-link">text-combo</a>
+            </li>
+            <li class="nav-item">
+              <a href="#link-combo" class="nav-link">link-combo</a>
+            </li>
+            <li class="nav-item">
+              <a href="#text-combo-save" class="nav-link">text-combo-save</a>
+            </li>
+            <li class="nav-item">
+              <a href="#link-combo-save" class="nav-link">link-combo-save</a>
+            </li>
+          </ul>
+        </nav>
+        
+      </div>
+
+    </div>
+    
+  </div>
+  
+  <script type="text/javascript" src="lib/angularjs-1.5.6/angular.min.js"></script>
+  <script type="text/javascript" src="dist/ng-field-edit.js"></script>
+  <script type="text/javascript">
+    var ngFieldEditApp = angular.module('ngFieldEditApp', ['ng-field-edit']);
+
+    ngFieldEditApp.controller('ngFieldEditCtrl', ['$scope', '$document', '$window', function($scope, $document, $window){
+      // 
+      $scope.ex01data = 'test value';
+      $scope.ex02data = 'test value';
+      $scope.ex03data = 'test value';
+      $scope.ex04data = 'test value';
+      $scope.ex05data = false;
+      $scope.ex06data = false;
+      $scope.ex07data = false;
+      $scope.ex08data = false;
+      $scope.ex09data = 2;
+      $scope.ex09options = [{'value': 1, 'description': 'test 01'}, 
+                            {'value': 2, 'description': 'test 02'}, 
+                            {'value': 3, 'description': 'test 03'}];
+      $scope.ex10data = 2;
+      $scope.ex10options = [{'value': 1, 'description': 'test 01'}, 
+                            {'value': 2, 'description': 'test 02'}, 
+                            {'value': 3, 'description': 'test 03'}];
+      $scope.ex11data = 2;
+      $scope.ex11options = [{'value': 1, 'description': 'test 01'}, 
+                            {'value': 2, 'description': 'test 02'}, 
+                            {'value': 3, 'description': 'test 03'}];
+      $scope.ex12data = 2;
+      $scope.ex12options = [{'value': 1, 'description': 'test 01'}, 
+                            {'value': 2, 'description': 'test 02'}, 
+                            {'value': 3, 'description': 'test 03'}];
+
+      // doc page
+      $scope.navbar_affix = $window.scrollY > 50;
+
+      $document.bind('scroll', function(){
+        $scope.navbar_affix = $window.scrollY > 50;
+        $scope.$apply();
+      });
+
+    }]);
+
+  </script>
+</body>
+</html>

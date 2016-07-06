@@ -57,20 +57,20 @@ angular.module('ng-field-edit', [])
       replace: true,
       template: '',
       scope: {
-        ngFormFieldEdit: '=ngFormFieldEdit',
+        form: '=ngFormFieldEdit',
         data: '=?ffeData'
       },
       link: function(scope, element, attrs){
 
         // form back to initial state
         scope.reset = function(){
-          scope.ngFormFieldEdit = feFormData();
+          scope.form = feFormData();
           scope.update();
         };
 
         scope.update = function(){
-          scope.ngFormFieldEdit = (scope.ngFormFieldEdit == undefined ? feFormData() : scope.ngFormFieldEdit);
-          scope.ngFormFieldEdit.setData(scope.data ? scope.data : {});
+          scope.form = (scope.form == undefined ? feFormData() : scope.form);
+          scope.form.setData(scope.data ? scope.data : {});
         };
 
         scope.$watch('data', function(){

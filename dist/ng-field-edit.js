@@ -11,11 +11,11 @@ angular.module('ng-field-edit', [])
     // showing combo
     $templateCache.put('template/ng-field-edit_data[combo].html', '<p class="form-control-static" ng-show="visible" ng-bind="getOption(form.data[field]).description || contentEmpty"></p>');
     // editing text
-    $templateCache.put('template/ng-field-edit_field[text].html', '<input class="form-control" type="text" ng-model="form.data[field]" ng-disabled="!editable || form.waiting" ng-show="visible">');
+    $templateCache.put('template/ng-field-edit_field[text].html', '<input class="form-control" type="text" ng-model="form.data[field]" ng-readonly="!editable && !form.waiting" ng-disabled="form.waiting" ng-show="visible">');
     // editing check
-    $templateCache.put('template/ng-field-edit_field[check].html', '<div class="checkbox"><label><input type="checkbox" ng-model="form.data[field]" ng-disabled="!editable || form.waiting" ng-show="visible"> <span ng-bind="contentDescription"></span></label></div>');
+    $templateCache.put('template/ng-field-edit_field[check].html', '<div class="checkbox"><label><input type="checkbox" ng-model="form.data[field]" ng-readonly="!editable && !form.waiting" ng-disabled="form.waiting" ng-show="visible"> <span ng-bind="contentDescription"></span></label></div>');
     // editing combo
-    $templateCache.put('template/ng-field-edit_field[combo].html', '<select class="form-control" ng-model="form.data[field]" ng-disabled="!editable || form.waiting" ng-options="op.value as op.description for op in options"></select>');
+    $templateCache.put('template/ng-field-edit_field[combo].html', '<select class="form-control" ng-model="form.data[field]" ng-readonly="!editable && !form.waiting" ng-disabled="form.waiting" ng-options="op.value as op.description for op in options"></select>');
 
   }])
   .factory('feFormData', function(){
@@ -23,24 +23,35 @@ angular.module('ng-field-edit', [])
       return {
         data: undefined, 
         _data: undefined, 
-        visible: true, 
+        visible: true,
+        adding: false,
         editing: false, 
-        waiting: false, 
+        waiting: true,
         save: function(){
-          angular.merge(this._data, this.data);
-          this.data = angular.copy(this._data);
+          this.adding = false;
           this.editing = false;
           this.waiting = true;
-        }, 
+          angular.merge(this._data, this.data);
+          this.reset();
+        },
+        new: function(){
+          this.adding = true;
+          this.editing = false;
+          this.waiting = false;
+          this.data = {};
+          this._data = this.data;
+        },
         edit: function(){
+          this.adding = false;
           this.editing = true;
           this.waiting = false;
         }, 
         cancel: function(){
-          this.reset();
+          this.adding = false;
           this.editing = false;
           this.waiting = true;
-        }, 
+          // this.reset();
+        },
         reset: function(){
           this.data = angular.copy(this._data);
         }, 
@@ -95,8 +106,10 @@ angular.module('ng-field-edit', [])
         contentDescription:'=?feContentDescription', 
         contentTrue:       '=?feContentTrue', 
         contentFalse:      '=?feContentFalse', 
-        contentEmpty:      '=?feContentEmpty', 
-        options:           '=?feOptions', 
+        contentEmpty:      '=?feContentEmpty',
+        options:           '=?feOptions',
+        alwaysShowField:   '=?feAlwaysShowField',
+        defaultValue:      '=?feDefaultValue',
         extra:             '=?feExtra'
       },
       link: function(scope, element, attrs){
@@ -110,6 +123,7 @@ angular.module('ng-field-edit', [])
         scope.contentFalse = (scope.contentFalse ? scope.contentFalse : '');
         scope.contentEmpty = (scope.contentEmpty ? scope.contentEmpty : 'empty');
         scope.options = (scope.options ? scope.options : []);
+        scope.alwaysShowField = (scope.alwaysShowField == undefined ? false : scope.alwaysShowField);
         // when don't exists form, create one
         scope.form = (scope.form == undefined ? feFormData() : scope.form);
         // when field is not implemented then create base field(data)
@@ -129,13 +143,13 @@ angular.module('ng-field-edit', [])
 
           switch(attrs.ngFieldEdit){
             case 'text':
-              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[text].html' : 'template/ng-field-edit_data[text].html');
+              return $templateCache.get(scope.form.editing || scope.alwaysShowField ? 'template/ng-field-edit_field[text].html' : 'template/ng-field-edit_data[text].html');
 
             case 'check':
-              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[check].html' : 'template/ng-field-edit_data[check].html');
+              return $templateCache.get(scope.form.editing || scope.alwaysShowField ? 'template/ng-field-edit_field[check].html' : 'template/ng-field-edit_data[check].html');
 
             case 'combo':
-              return $templateCache.get(scope.form.editing ? 'template/ng-field-edit_field[combo].html' : 'template/ng-field-edit_data[combo].html');
+              return $templateCache.get(scope.form.editing || scope.alwaysShowField ? 'template/ng-field-edit_field[combo].html' : 'template/ng-field-edit_data[combo].html');
 
           }
         };
@@ -158,6 +172,11 @@ angular.module('ng-field-edit', [])
         /****************
          * watchs
          ****************/
+        scope.$watch('form.adding', function(){
+          if(scope.form.adding && scope.defaultValue !== undefined){
+            scope.form.data[scope.field] = scope.defaultValue;
+          }
+        }, true);
         scope.$watch('form.editing', scope.updateTemplate);
         scope.$watch('form._data', function(){
           // when namespace is used

@@ -5,15 +5,15 @@
 angular.module('ng-field-edit', [])
   .run(['$templateCache', function($templateCache){
     // showing text
-    $templateCache.put('template/ng-field-edit_data[text].html', '<span ng-show="visible">{{ form.data[field] || contentEmpty }}</span>');
+    $templateCache.put('template/ng-field-edit_data[text].html', '<p class="form-control-static" ng-show="visible" ng-bind="form.data[field] || contentEmpty"></p>');
     // showing check
-    $templateCache.put('template/ng-field-edit_data[check].html', '<span ng-show="visible">{{ form.data[field] ? contentTrue : contentFalse }}</span>');
+    $templateCache.put('template/ng-field-edit_data[check].html', '<p class="form-control-static" ng-show="visible" ng-bind="form.data[field] ? contentTrue : contentFalse"></p>');
     // showing combo
-    $templateCache.put('template/ng-field-edit_data[combo].html', '<span ng-show="visible">{{ getOption(form.data[field]).description || contentEmpty }}</span>');
+    $templateCache.put('template/ng-field-edit_data[combo].html', '<p class="form-control-static" ng-show="visible" ng-bind="getOption(form.data[field]).description || contentEmpty"></p>');
     // editing text
     $templateCache.put('template/ng-field-edit_field[text].html', '<input class="form-control" type="text" ng-model="form.data[field]" ng-disabled="!editable || form.waiting" ng-show="visible">');
     // editing check
-    $templateCache.put('template/ng-field-edit_field[check].html', '<input type="checkbox" ng-model="form.data[field]" ng-disabled="!editable || form.waiting" ng-show="visible"> {{ contentDescription }}');
+    $templateCache.put('template/ng-field-edit_field[check].html', '<div class="checkbox"><label><input type="checkbox" ng-model="form.data[field]" ng-disabled="!editable || form.waiting" ng-show="visible"> <span ng-bind="contentDescription"></span></label></div>');
     // editing combo
     $templateCache.put('template/ng-field-edit_field[combo].html', '<select class="form-control" ng-model="form.data[field]" ng-disabled="!editable || form.waiting" ng-options="op.value as op.description for op in options"></select>');
 
@@ -57,21 +57,21 @@ angular.module('ng-field-edit', [])
       replace: true,
       template: '',
       scope: {
-        form: '=ngFormFieldEdit', 
+        ngFormFieldEdit: '=ngFormFieldEdit',
         data: '=?ffeData'
       },
       link: function(scope, element, attrs){
 
         // form back to initial state
         scope.reset = function(){
-          scope.form = feFormData();
+          scope.ngFormFieldEdit = feFormData();
           scope.update();
-        }
+        };
 
         scope.update = function(){
-          scope.form = (scope.form == undefined ? feFormData() : scope.form);
-          scope.form.setData(scope.data ? scope.data : {});
-        }
+          scope.ngFormFieldEdit = (scope.ngFormFieldEdit == undefined ? feFormData() : scope.ngFormFieldEdit);
+          scope.ngFormFieldEdit.setData(scope.data ? scope.data : {});
+        };
 
         scope.$watch('data', function(){
           scope.update();

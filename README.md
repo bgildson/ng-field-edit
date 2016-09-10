@@ -1,4 +1,4 @@
 ng-field-edit
 =============
 
-#### Simple Example: [http://gildson.github.io/ng-formula-maker](http://gildson.github.io/ng-formula-maker)
+#### Initial Documentation: [http://gildson.github.io/ng-field-edit](http://gildson.github.io/ng-field-edit)
